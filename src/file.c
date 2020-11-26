@@ -1,4 +1,5 @@
 #include "file.h"
+#include "dynamicString.h"
 
 
 FILE_NAME = "phone_book.txt"; // Глобальная переменная, обозначающая название файла
@@ -19,10 +20,18 @@ int fileDump(const char fileInfo){
 
 
 // Считывание данных с файла
-char* fileRead(){
+dynamicString* fileRead(){
     FILE *file;
-    char *dump;
-    file = fopen(FILE_NAME, "r"); 
-
-
+    dynamicString *dump = generateString();
+    file = fopen(FILE_NAME, "r");
+    if (!file){
+        fclose(file);
+        return dump;
+    }
+    char buf = fgetc(file);
+    while(buf != EOF){
+        addToString(dump, buf);
+    }
+    fclose(file);
+    return dump;
 }
