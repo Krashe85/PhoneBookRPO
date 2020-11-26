@@ -3,8 +3,8 @@ CFLAGS=-std=c99 -Wall -c -g
 LDFLAGS=-g
 
 SRC_DIR=src
-SOURCES=main.c dynamicString.c phoneProfile.c file.c
-
+SOURCES=main.c utilites/dynamicString.c phoneProfile/phoneProfile.c utilites/file.c db/fakeBaseEmulator.c
+ 
 OBJ_DIR=build/obj
 OBJECTS=$(SOURCES:%.c=$(OBJ_DIR)/%.o)
 
