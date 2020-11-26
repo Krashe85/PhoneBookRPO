@@ -9,4 +9,7 @@ typedef struct {
     char* phone;
 }phoneProfile;
 
+void printPhoneProfile(phoneProfile* label);
+void freePhoneProfile(phoneProfile* label);
+
 #endif
