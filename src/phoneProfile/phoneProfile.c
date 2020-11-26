@@ -11,7 +11,6 @@ phoneProfile* initializitePhoneProfile(const char* name,
     return label;
 }
 
-
 void printPhoneProfile(phoneProfile* label){
     printf("=======================\n");
     printf("Имя - %s\n", label->name);
@@ -19,9 +18,16 @@ void printPhoneProfile(phoneProfile* label){
     printf("=======================\n");
 }
 
-
 void freePhoneProfile(phoneProfile* label){
     free(label->name);
     free(label->phone);
     free(label);
+}
+
+char *formatToFile(phoneProfile* label){
+    char *result = (char*)malloc((strlen(label->name)+strlen(label->phone))  * sizeof(char));
+    strcpy(result, label->name);
+    result = strcat("|", result);
+    result = strcat(label->phone, result);
+    return result;
 }

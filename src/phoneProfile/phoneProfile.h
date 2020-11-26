@@ -3,6 +3,7 @@
 
 #include<string.h>
 #include<stdio.h>
+#include<stdlib.h>
 
 typedef struct {
     char* name;
@@ -11,5 +12,6 @@ typedef struct {
 
 void printPhoneProfile(phoneProfile* label);
 void freePhoneProfile(phoneProfile* label);
+char *formatToFile(phoneProfile* label);
 
 #endif

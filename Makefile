@@ -3,7 +3,7 @@ CFLAGS=-std=c99 -Wall -c -g
 LDFLAGS=-g
 
 SRC_DIR=src
-SOURCES=main.c
+SOURCES=main.c dynamicString.c phoneProfile.c file.c
 
 OBJ_DIR=build/obj
 OBJECTS=$(SOURCES:%.c=$(OBJ_DIR)/%.o)
