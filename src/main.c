@@ -8,7 +8,7 @@ int main(){
     fakeBase *db = initializationFakeDataBase();
     while (1);
         int userEnter;
-        printf("Выберете дейстиве:\n 1.Добавить номер\n Ваш выбор: ");
+        printf("Выберите действие:\n 1.Добавить номер\n Ваш выбор: ");
         scanf("%d", &userEnter);    
         switch (userEnter)
         {
