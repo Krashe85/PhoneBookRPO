@@ -3,7 +3,7 @@
 
 dynamicString* generateString() {
     dynamicString* result =
-        (struct dynamicString*)malloc(sizeof(dynamicString));
+        (dynamicString*)malloc(sizeof(dynamicString));
     result->currentSize = 16;
     result->currentlyUsed = 0;
     result->string = (char*)malloc(result->currentSize * sizeof(char));
