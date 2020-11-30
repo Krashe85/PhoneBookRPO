@@ -7,7 +7,7 @@
 #include<string.h>
 
 
-int fileDump(const char fileInfo);
+
 
 
 #endif
