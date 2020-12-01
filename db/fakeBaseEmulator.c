@@ -1,4 +1,4 @@
-#include"fakeBaseEmulator.h"
+#include "fakeBaseEmulator.h"
 #include <string.h>
 
 fakeBase *initializationFakeDataBase(){
@@ -28,6 +28,8 @@ void fakeDelete(phoneUserLabel* label, fakeBase* db) {
     for (unsigned long i = labelID; i < db->size; i++) {
         db->elements[i] = db->elements[i + 1];
     }
+    db->size = db->size - 1;
+    fakeSort(db);
 }
 
 void fakeAdd(fakeBase *base, phoneUserLabel* label){
@@ -51,4 +53,29 @@ int fakeSearchProfileId(fakeBase *base, const phoneUserLabel *label){
         }
     }
     return -1;
+}
+
+int fakeLikeSearch(fakeBase *base, char * name){
+    // при наождение похожего профиля возвращает 1, иначе -1
+    for (int element=0; element < base->size; ++element){
+        phoneUserLabel *currentProfile = base->elements[element];
+        if (strcmp(currentProfile->name, name) == 0){
+            return element;
+        }
+    }
+    return -1;
+}
+
+void fakeEditPhoneLabel(fakeBase* db, phoneUserLabel* label,
+                        const char* newName, const char* newPhone){
+    free(label->phone);
+    free(label->name);
+    label->name = (char*)malloc(strlen(newName) * sizeof(char));
+    label->phone = (char*)malloc(strlen(newPhone) * sizeof(char));
+    for (int i = 0; i < strlen(newName); ++i) {
+        label->name[i] = newName[i];
+    }
+    for (int i = 0; i < strlen(newPhone); i++) {
+        label->phone[i] = newPhone[i];
+    }
 }

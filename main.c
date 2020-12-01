@@ -25,13 +25,47 @@ void menuPrintAll(struct fakeBase *db){
     }
 }
 
+void menuDelete(fakeBase *db){
+    DynamicString* name = (DynamicString*)initString();
+    printf("Введите имя\n");
+    readToString(name);
+    int searchResult = fakeLikeSearch(db, name->string);
+    if (searchResult == -1){
+        printf("Не удалось найти пользователя по указанным данным\n");
+    }
+    phoneUserLabel *label = db->elements[searchResult];
+    fakeDelete(label, db);
+    printf("Успешно удалено!\n");
+    freeString(name);
+}
+
+void menuEditPhoneLabel(fakeBase* db){
+    DynamicString* name = (DynamicString*)initString();
+    printf("Введите имя\n");
+    readToString(name);
+    int searchResult = fakeLikeSearch(db, name->string);
+    if (searchResult == -1){
+        printf("Не удалось найти пользователя по указанным данным\n");
+    }
+    phoneUserLabel *label = db->elements[searchResult];
+    DynamicString* newName = (DynamicString*)initString();
+    DynamicString* newPhone = (DynamicString*)initString();
+    printf("Введите новое имя и телефон\n");
+    readToString(newName);
+    readToString(newPhone);
+    fakeEditPhoneLabel(db, label, newName->string, newPhone->string);
+    freeString(newName);
+    freeString(newPhone);
+    freeString(name);
+    printf("Успешно!\n");
+}
 
 int main(){
     fakeBase *db;
     db = initializationFakeDataBase();
     for (;;) {
         int userEnter;
-        printf("Выберете дейстиве:\n 1.Добавить номер\n 2.Вывести весь список\n 10.Выйти\n Ваш выбор: ");
+        printf("Выберете дейстиве:\n 1.Добавить номер\n 2.Вывести весь список\n 3.Удаление\n 4.Редактирование\n 10.Выйти\n Ваш выбор: ");
         scanf("%d", &userEnter);
         switch (userEnter) {
             case 1:
@@ -39,6 +73,12 @@ int main(){
                 break;
             case 2:
                 menuPrintAll(db);
+                break;
+            case 3:
+                menuDelete(db);
+                break;
+            case 4:
+                menuEditPhoneLabel(db);
                 break;
             case 10:
                 printf("Пока!\n");
