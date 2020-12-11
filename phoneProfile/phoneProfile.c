@@ -4,13 +4,15 @@
 
 phoneUserLabel* buildPhoneProfile(const char* name,
                                   const char* phone) {
+    unsigned int nameLength = strlen(name);
+    unsigned int phoneLength = strlen(phone);
     phoneUserLabel* label = (phoneUserLabel*)malloc(sizeof(phoneUserLabel));
-    label->name = (char*)malloc(strlen(name) * sizeof(char));
-    label->phone = (char*)malloc(strlen(phone) * sizeof(char));
-    for (int i = 0; i < strlen(name); ++i) {
+    label->name = (char*)malloc((nameLength + 1) * sizeof(char));
+    label->phone = (char*)malloc((phoneLength + 1) * sizeof(char));
+    for (int i = 0; i < nameLength; ++i) {
         label->name[i] = name[i];
     }
-    for (int i = 0; i < strlen(phone); i++) {
+    for (int i = 0; i < phoneLength; i++) {
         label->phone[i] = phone[i];
     }
     return label;
