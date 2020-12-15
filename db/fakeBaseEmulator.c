@@ -79,3 +79,71 @@ void fakeEditPhoneLabel(fakeBase* db, phoneUserLabel* label,
         label->phone[i] = newPhone[i];
     }
 }
+
+int dumpBaseToFile(fakeBase* db, const char* path) {
+    FILE* file;
+
+    if ((file = fopen(path, "w"))) {
+        for (int i = 0; i < db->size; ++i) {
+            fprintf(file, "{\n");
+            fprintf(file, "%s\n%s\n", db->elements[i]->name,
+                    db->elements[i]->phone);
+            fprintf(file, "}\n");
+        }
+    } else {
+        return 0;
+    }
+
+    fclose(file);
+    return 1;
+}
+
+fakeBase *dumpBaseFromFile(fakeBase* db, const char* path) {
+
+    FILE* file;
+    if (!(file = fopen(path, "r"))) {
+        return db;
+    }
+
+    char buf = fgetc(file);
+    while (buf != EOF) {
+        if (buf == '{') {
+            while (buf != '\n')
+                buf = fgetc(file);
+            while (buf == '\n')
+                buf = fgetc(file);
+
+            DynamicString* value = initString();
+            while (buf != '\n') {
+                addToString(value, buf);
+                buf = fgetc(file);
+            }
+
+            char name[(value->currentlyUsed) + 1];
+            strncpy(name, value->string, sizeof(name));
+
+            freeString(value);
+
+            value = initString();
+            while (buf == '\n')
+                buf = fgetc(file);
+            while (buf != '\n') {
+                addToString(value, buf);
+                buf = fgetc(file);
+            }
+
+            char number[(value->currentlyUsed) + 1];
+            strncpy(number, value->string, sizeof(number));
+
+            freeString(value);
+
+            phoneUserLabel* newLabel = buildPhoneProfile(name, number);
+            fakeAdd(db, newLabel);
+        }
+
+        buf = fgetc(file);
+    }
+
+    fclose(file);
+    return db;
+}

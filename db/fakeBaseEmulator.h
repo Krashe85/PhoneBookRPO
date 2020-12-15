@@ -3,6 +3,7 @@
 
 
 #include "../phoneProfile/phoneProfile.h"
+#include "../utilites/dynamicString.h"
 
 typedef struct fakeBase{
     phoneUserLabel **elements;
@@ -15,5 +16,8 @@ void fakeDelete(phoneUserLabel* label, fakeBase* db);
 int fakeLikeSearch(fakeBase *base, char * name);
 void fakeEditPhoneLabel(fakeBase* db, phoneUserLabel* label,
                         const char* newName, const char* newPhone);
+int dumpBaseToFile(fakeBase* db, const char* path);
+fakeBase *dumpBaseFromFile(fakeBase* db, const char* path);
+
 
 #endif

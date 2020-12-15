@@ -60,12 +60,37 @@ void menuEditPhoneLabel(fakeBase* db){
     printf("Успешно!\n");
 }
 
+void menuFile(fakeBase* db){
+    printf("Дейстивя с файлом:\n 1.Загрузить базу из файла\n 2.Загрузить базу в файл\n");
+    int userEnter, result;
+    scanf("%d", &userEnter);
+    DynamicString *filePath = initString();
+    printf("Введите путь к файу:\n :::");
+    readToString(filePath);
+    switch (userEnter) {
+        case 1:
+            dumpBaseFromFile(db, filePath->string);
+            printf("Успешно!\n");
+            break;
+        case 2:
+            result = dumpBaseToFile(db, filePath->string);
+            if (result == 0){
+                printf("Произошла ошибка!\n");
+            } else {
+                printf("Успешно!\n");
+                printf("Пока!\n");
+                exit(0);
+            }
+            break;
+    }
+}
+
 int main(){
     fakeBase *db;
     db = initializationFakeDataBase();
     for (;;) {
         int userEnter;
-        printf("Выберете дейстиве:\n 1.Добавить номер\n 2.Вывести весь список\n 3.Удаление\n 4.Редактирование\n 10.Выйти\n Ваш выбор: ");
+        printf("Выберете дейстиве:\n 1.Добавить номер\n 2.Вывести весь список\n 3.Удаление\n 4.Редактирование\n 5.Работа с файлом\n 10.Выйти\n Ваш выбор: ");
         scanf("%d", &userEnter);
         switch (userEnter) {
             case 1:
@@ -79,6 +104,9 @@ int main(){
                 break;
             case 4:
                 menuEditPhoneLabel(db);
+                break;
+            case 5:
+                menuFile(db);
                 break;
             case 10:
                 printf("Пока!\n");
